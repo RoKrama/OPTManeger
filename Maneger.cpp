@@ -77,6 +77,7 @@ void OPTManeger<Fn_type>::run_and_collect()
 {
 	std::unique_lock<std::mutex> u_lock(cv_mtx);
 	can_begin = true; // beging processing flag
+	processing_done = false; // reset
 	u_lock.unlock();
 	c_v.notify_all(); // signal
 
