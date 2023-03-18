@@ -26,7 +26,6 @@ namespace opt
 		const int N_THREADS;
 		const int N_DATA;
 		std::vector<std::thread> threads;
-		std::mutex write_lock;
 		std::mutex finish_lock;
 		std::mutex start_lock;
 		std::condition_variable c_v;
@@ -38,7 +37,7 @@ namespace opt
 		// helper variables
 		std::promise<void> start_promise;
 		std::shared_future<void> start_future;
-		int data_idx;
+		std::atomic<int> data_idx;
 		bool processing_done;
 		bool can_begin;
 		bool stop_threading;
@@ -53,7 +52,7 @@ namespace opt
 
 		// public functions
 	public:
-		OPTManeger(const int , const int , Fn_type&;
+		OPTManeger(const int , const int , Fn_type&);
 		//void run();
 		//void collect();
 		void run_and_collect();
@@ -72,7 +71,6 @@ namespace opt
 		bool completion_fn_done;
 		Fn_type complete;
 		std::condition_variable c_v;
-		std::mutex read_lock;
 		std::mutex thread_lock;
 	public:
 		gates(): N_EXPECTED(0) {};
